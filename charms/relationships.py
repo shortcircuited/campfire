@@ -26,3 +26,4 @@ if __name__ == "__main__":
     if seed == 0:
         seed = str(random.randrange(sys.maxsize))
     random.seed(seed)
+    result = relationships()

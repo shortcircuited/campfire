@@ -9,11 +9,11 @@ if __name__ == "__main__":
 conn = sqlite3.connect(f"{os.path.dirname(__file__)}\\CHARMS.db")
 
 
-class History:
+class history:
     def __init__(self, gentype, age):
         table = pandas.read_sql_query(f"SELECT * from History", conn)
         if gentype == 'all' or gentype == 'Early Life' or gentype == '0':
-            self.early_life = f'They {random.choice(table["Early Life"].dropna())}'
+            self.early_life = f'{random.choice(table["Early Life"].dropna())}'
         if gentype == 'all' or gentype == 'Key Events' or gentype == '0':
             if age == 'child':
                 num_key_events = 1
@@ -25,10 +25,14 @@ class History:
                 num_key_events = random.randrange(4,6)
             else:
                 num_key_events = 6
-            self.key_events = []
+            key_events = []
             for i in range(1, num_key_events):
-                self.key_events.append(random.choice(table["Key Events"].dropna()))
-        # Add Recent Event
+                if i == 1:
+                    key_events.append(f'- {random.choice(table["Key Events"].dropna())}\n')
+                key_events.append(f'{random.choice(table["Key Events"].dropna())}\n')
+            self.key_events = "- ".join(key_events)
+        if gentype == 'all' or gentype == 'Recent Event' or gentype == '0':
+            self.recent_event = random.choice(table['Recent Events'].dropna())
 
         
 if __name__ == "__main__":
@@ -38,7 +42,7 @@ if __name__ == "__main__":
     if seed == 0:
         seed = str(random.randrange(sys.maxsize))
     if age == 0:
-        randage = random.rarandom.randrange(1,100)
+        randage = random.randrange(1,100)
         if randage <= 5:
             age = 'child'
         elif randage <= 19:
@@ -55,6 +59,7 @@ if __name__ == "__main__":
         gentype == 'all'
     random.seed(seed)
     print(f'Seed: {seed}')
-    result = History(gentype, age)
+    result = history(gentype, age)
+    print(f'Early Life:\n{result.early_life}\n\nKey Events:\n{result.key_events}\nRecent Event:\n{result.recent_event}')
     conn.close()
 

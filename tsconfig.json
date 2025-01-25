@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "lib": ["ES6", "DOM"],
+      "module": "CommonJS",
+      "target": "es6",
+
+      // "strict": true,
+      "isolatedModules": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      // "moduleResolution": "nodenext",
+      "resolveJsonModule": true
+    },
+    // "include": ["src/**/*"],
+    // "exclude": ["src/__tests__/*"]
+  }

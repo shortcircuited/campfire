@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+const {exec} = require('child_process');
 
 import {Request} from 'express';
 
@@ -25,6 +26,37 @@ app.use(cors({
     origin: 'http://localhost:5173',
     optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 }))
+
+let currentProcess = null;
+
+app.get('/test', (req, res) =>{
+    const pythonPath = path.join(__dirname, "../../launch.py");
+
+    if(currentProcess != null){
+        currentProcess.kill();
+        currentProcess = null;
+    }
+
+    currentProcess = exec(`python ${pythonPath} 0`, (error, stdout, stderr) => {
+        if(error){
+            console.error(error);
+            return res.status(500).send(JSON.stringify({
+                error:`Error executing python: ${error.message}`
+            }))
+        }
+
+        if(stderr){
+            console.error(`stderr: ${stderr}`)
+            return res.status(500).send(JSON.stringify({
+                error: `stderr: ${stderr}`
+            }))
+        }
+
+        res.send(JSON.stringify({
+            message: stdout
+        }))
+    })
+})
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

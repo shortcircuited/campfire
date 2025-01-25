@@ -2,10 +2,12 @@
   "name": "campfire",
   "version": "1.0.0",
   "description": "",
-  "main": "frontend/index.js",
+  "main": "frontend/src/app.js",
   "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc",
+    "start": "nodemon --watch src --ext js --exec node frontend/src/app.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "nodemon": "^3.1.9",
     "typescript": "^5.7.3"
   }
 }

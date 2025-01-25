@@ -6,4 +6,4 @@
 2. Run **npm i** to download all dependencies
 3. Run **npm run build** to transpile the TypeScript into JavaScript
 4. Run **npm run start** to start the server
-5. Connect to [http://localhost:3000/index]
+5. [Connect to the webserver](http://localhost:3000/index)
